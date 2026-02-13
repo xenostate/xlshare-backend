@@ -14,13 +14,4 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 
 
 def get_connection():
-    """
-    Creates and returns a new PostgreSQL connection.
-    """
-    return psycopg2.connect(
-        host=DB_HOST,
-        port=DB_PORT,
-        dbname=DB_NAME,
-        user=DB_USER,
-        password=DB_PASSWORD
-    )
+    return psycopg2.connect(os.getenv("DATABASE_URL"))

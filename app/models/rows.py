@@ -48,3 +48,24 @@ def get_rows(table_id: int, date_from: str, date_to: str) -> list[dict]:
             return [dict(zip(colnames, row)) for row in rows]
     finally:
         conn.close()
+
+
+def get_row(table_id: int, row_date: str) -> dict | None:
+    query = """
+    SELECT *
+    FROM table_rows
+    WHERE table_id = %s AND row_date = %s
+    LIMIT 1;
+    """
+
+    conn = get_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(query, (table_id, row_date))
+            row = cur.fetchone()
+            if row is None:
+                return None
+            colnames = [desc[0] for desc in cur.description]
+            return dict(zip(colnames, row))
+    finally:
+        conn.close()
