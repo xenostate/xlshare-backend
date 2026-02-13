@@ -21,8 +21,13 @@ app = FastAPI(title="Coal Reports API")
 
 app.add_middleware(
   CORSMiddleware,
-  allow_origins=["http://localhost:5173",
-                 "https://xlshare-frontend.vercel.app"],
+  allow_origins=[
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+      "https://xlshare-frontend.vercel.app",
+  ],
+  # Allow any Vercel preview domain like https://<branch>--xlshare-frontend.vercel.app
+  allow_origin_regex=r"https://.*vercel\.app",
   allow_credentials=True,
   allow_methods=["*"],
   allow_headers=["*"],
